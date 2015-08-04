@@ -4,8 +4,13 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -82,8 +87,17 @@ public class CleverWizard extends Wizard implements IImportWizard {
 
 					monitor.setTaskName("Importing repository");
 					repositoryUtil.addConfiguredRepository(op.getGitDir());
+					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(selected.getName());
+					File projectFile = new File(cloneDir.getAbsolutePath() + "/.project");
+					if (projectFile.exists()) {
+						IProjectDescription desc = ResourcesPlugin.getWorkspace().loadProjectDescription(new Path(projectFile.getAbsolutePath()));
+						project.create(desc, monitor);
+					} else {
+						project.create(monitor);
+					}
+					project.open(monitor);
 					monitor.worked(1);
-				} catch (URISyntaxException | InvocationTargetException | InterruptedException e) {
+				} catch (URISyntaxException | InvocationTargetException | InterruptedException | CoreException e) {
 					e.printStackTrace();
 					return Status.CANCEL_STATUS;
 				}

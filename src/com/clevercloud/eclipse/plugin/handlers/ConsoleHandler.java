@@ -1,12 +1,8 @@
 package com.clevercloud.eclipse.plugin.handlers;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.wizards.IWizardDescriptor;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
@@ -26,18 +22,7 @@ public class ConsoleHandler {
 			this.executeLogin(shell);
 			return;
 		}
-		IWizardDescriptor desc = PlatformUI.getWorkbench().getNewWizardRegistry().findWizard("org.eclipse.jdt.ui.wizards.JavaProjectWizard");
-		if (desc == null) {
-			System.out.println("Langage not found, using defaut project");
-			desc = PlatformUI.getWorkbench().getNewWizardRegistry().findWizard("org.eclipse.ui.wizards.new.project");
-		}
-		try {
-			IWizard wiz = desc.createWizard();
-			WizardDialog wd = new WizardDialog(shell, wiz);
-			wd.open();
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		importWizard(shell);
 	}
 
 	private void executeLogin(Shell shell) {
