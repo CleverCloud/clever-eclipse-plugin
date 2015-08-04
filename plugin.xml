@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="com.clevercloud.eclipse.plugin.fragment"
+         point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="debugenabled">
+         <with
+               variable="debugEnabled">
+            <equals
+                  value="true">
+            </equals>
+         </with>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
+            class="com.clevercloud.eclipse.plugin.ui.wizards.CleverWizard"
+            icon="icons/clever16.png"
+            id="com.clevercloud.eclipse.plugin.ui.wizards.importCleverWizard"
+            name="Import from Clever Cloud">
+      </wizard>
+   </extension>
+	<extension
+         point="org.eclipse.egit.ui.cloneSourceProvider">
+      <source
+            hasFixLocation="true"
+            icon="icons/clever16.png"
+            label="TOTOAST">
+      </source>
+      <repositorySearchPage
+            class="com.clevercloud.eclipse.plugin.ui.wizards.ImportSelectionPage">
+      </repositorySearchPage>
+   </extension>
+</plugin>
