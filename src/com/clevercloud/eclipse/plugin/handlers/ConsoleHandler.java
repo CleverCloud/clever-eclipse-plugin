@@ -1,8 +1,13 @@
 package com.clevercloud.eclipse.plugin.handlers;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PlatformUI;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
@@ -17,6 +22,14 @@ public class ConsoleHandler {
 		if (CleverCloudApi.accessToken == null) {
 			this.executeLogin(shell);
 			return;
+		}
+		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+
+		if (editor != null) {
+			IFileEditorInput input = (IFileEditorInput)editor.getEditorInput();
+			IFile file = input.getFile();
+			IProject project = file.getProject();
+			//TODO: Check clever -> load git -> commit -> push
 		}
 		importWizard(shell);
 	}
@@ -34,7 +47,6 @@ public class ConsoleHandler {
 	}
 
 	private void importWizard(Shell shell) {
-		//System.out.println(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().);
 		WizardDialog dial = new WizardDialog(shell, new CleverWizard());
 		dial.open();
 	}
