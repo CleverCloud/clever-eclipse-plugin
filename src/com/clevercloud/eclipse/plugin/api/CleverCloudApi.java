@@ -3,6 +3,7 @@ package com.clevercloud.eclipse.plugin.api;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -14,6 +15,10 @@ public class CleverCloudApi extends DefaultApi10a {
 
 	public static final String BASE_URL = "https://api.clever-cloud.com/v2";
 	private static final String AUTHORIZE_URL = BASE_URL + "/oauth/authorize?oauth_token=%s";
+
+	private static final String API_KEY = "T8NZNyJejYkevYvKj1EWgSq0rnXABH";
+	private static final String API_SECRET = "QCLYg7n9YJwlxoEI0HkMSwetuphT9Q";
+	private static final String CALLBACK_URL =  "https://console.clever-cloud.com/cli-oauth";
 
 	public static String user = null;
 	public static String oauthToken = null;
@@ -56,7 +61,16 @@ public class CleverCloudApi extends DefaultApi10a {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public static void loadApi() {
+		CleverCloudApi.oauth = new ServiceBuilder()
+				.provider(CleverCloudApi.class)
+				.apiKey(API_KEY)
+				.apiSecret(API_SECRET)
+				.callback(CALLBACK_URL)
+				.build();
+	}
+
 	public static String apiRequest(String url) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, BASE_URL + url);
 		oauth.signRequest(accessToken, request);
