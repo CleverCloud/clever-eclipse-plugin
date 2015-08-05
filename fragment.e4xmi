@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_jJz9YC7CEeWW1c_Gw1RHZw">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_kGtqgC7CEeWW1c_Gw1RHZw" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
-    <elements xsi:type="commands:Command" xmi:id="_neb0QC7CEeWW1c_Gw1RHZw" elementId="com.clevercloud.eclipse.plugin.command.consoleCommand" commandName="consoleCommand"/>
+    <elements xsi:type="commands:Command" xmi:id="_neb0QC7CEeWW1c_Gw1RHZw" elementId="com.clevercloud.eclipse.plugin.command.consoleCommand" commandName="Console"/>
     <elements xsi:type="commands:Command" xmi:id="_o0gX4DFKEeW2FoZeK15Yvg" elementId="com.clevercloud.eclipse.plugin.command.disconnectCommand" commandName="disconnectCommand"/>
     <elements xsi:type="commands:Command" xmi:id="_n2vpoDUwEeWnF7NVDyPopA" elementId="com.clevercloud.eclipse.plugin.command.creditCommand" commandName="creditCommand"/>
   </fragments>
