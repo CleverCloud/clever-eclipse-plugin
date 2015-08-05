@@ -19,6 +19,7 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.UIPreferences;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -89,14 +90,21 @@ public class CleverWizard extends Wizard implements IImportWizard {
 					repositoryUtil.addConfiguredRepository(op.getGitDir());
 					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(selected.getName());
 					File projectFile = new File(cloneDir.getAbsolutePath() + "/.project");
+					IProjectDescription desc;
 					if (projectFile.exists()) {
-						IProjectDescription desc = ResourcesPlugin.getWorkspace().loadProjectDescription(new Path(projectFile.getAbsolutePath()));
+						desc = ResourcesPlugin.getWorkspace().loadProjectDescription(new Path(projectFile.getAbsolutePath()));
 						project.create(desc, monitor);
+						project.open(monitor);
 					} else {
 						project.create(monitor);
+						project.open(monitor);
+						desc = project.getDescription();
+						desc.setNatureIds(new String[] {JavaCore.NATURE_ID});
+						project.setDescription(desc, monitor);
+						//TODO: Set langage plugin
 					}
-					project.open(monitor);
 					monitor.worked(1);
+
 				} catch (URISyntaxException | InvocationTargetException | InterruptedException | CoreException e) {
 					e.printStackTrace();
 					return Status.CANCEL_STATUS;
