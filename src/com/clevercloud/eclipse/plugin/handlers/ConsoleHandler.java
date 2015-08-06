@@ -2,16 +2,23 @@ package com.clevercloud.eclipse.plugin.handlers;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
 import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.core.PushUtils;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
 import com.clevercloud.eclipse.plugin.ui.wizards.CleverWizard;
 
@@ -23,15 +30,8 @@ public class ConsoleHandler {
 			this.executeLogin(shell);
 			return;
 		}
-		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-
-		if (editor != null) {
-			IFileEditorInput input = (IFileEditorInput)editor.getEditorInput();
-			IFile file = input.getFile();
-			IProject project = file.getProject();
-			//TODO: load git-> Check clever -> commit -> push
-		}
-		importWizard(shell);
+		if (executePush(shell) == false)
+			importWizard(shell);
 	}
 
 	private void executeLogin(Shell shell) {
@@ -49,5 +49,33 @@ public class ConsoleHandler {
 	private void importWizard(Shell shell) {
 		WizardDialog dial = new WizardDialog(shell, new CleverWizard());
 		dial.open();
+	}
+
+	private boolean executePush(Shell shell) {
+		IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench().getService(IWorkbenchSiteProgressService.class);
+		if (editor != null) {
+			IFileEditorInput input = (IFileEditorInput)editor.getEditorInput();
+			IFile file = input.getFile();
+			final IProject project = file.getProject();
+			Job job = new Job(project.getName())  {
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					PushUtils op = new PushUtils(project, "COMMIT", monitor);
+					try {
+						return op.execute();
+					} catch (CoreException e) {
+						e.printStackTrace();
+						return Status.CANCEL_STATUS;
+					}
+				}
+			};
+			if (progress != null) {
+				progress.schedule(job);
+			} else {
+				job.schedule();
+			}
+		}
+		return true;
 	}
 }
