@@ -12,11 +12,14 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.project.RepositoryMapping;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
+
+import com.clevercloud.eclipse.plugin.ui.CommitDialog;
 
 public class PushUtils {
 
@@ -40,6 +43,8 @@ public class PushUtils {
 			//TODO: Regex match repo
 			if (remote.equals("clever")) {
 				final String commitMessage = getCommitMessage(shell);
+				if (commitMessage == null)
+					return true;
 				Job job = new Job(this.project.getName()) {
 					@Override
 					protected IStatus run(IProgressMonitor monitor) {
@@ -73,9 +78,15 @@ public class PushUtils {
 	}
 
 	private String getCommitMessage(Shell shell) {
-		String commit = "Commited by Clever Cloud Eclipse plugin.";
-		//TODO: Commit Message Dialog
-		return commit;
+		CommitDialog commitDialog = new CommitDialog(shell);
+		commitDialog.create();
+		if (commitDialog.open() == Window.OK) {
+			String commit = commitDialog.getCommitMessage();
+			if (commit.equals(""))
+				commit = "Commited by Clever Cloud Eclipse plugin.";
+			return commit;
+		}
+		return null;
 	}
 
 	private void push(Repository repo, IProgressMonitor monitor) {
