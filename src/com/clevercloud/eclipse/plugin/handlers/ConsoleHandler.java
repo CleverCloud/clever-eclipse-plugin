@@ -29,7 +29,7 @@ public class ConsoleHandler {
 			IFileEditorInput input = (IFileEditorInput)editor.getEditorInput();
 			IFile file = input.getFile();
 			IProject project = file.getProject();
-			//TODO: Check clever -> load git -> commit -> push
+			//TODO: load git-> Check clever -> commit -> push
 		}
 		importWizard(shell);
 	}
