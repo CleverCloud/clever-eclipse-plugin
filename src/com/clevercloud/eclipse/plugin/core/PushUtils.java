@@ -42,14 +42,15 @@ public class PushUtils {
 		for (String remote : repo.getRemoteNames()) {
 			//TODO: Regex match repo
 			if (remote.equals("clever")) {
-				final String commitMessage = getCommitMessage(shell);
-				if (commitMessage == null)
-					return true;
+				//final String commitMessage = getCommitMessage(shell);
+				//if (commitMessage == null)
+				//	return true;
 				Job job = new Job(this.project.getName()) {
 					@Override
 					protected IStatus run(IProgressMonitor monitor) {
 						try {
-							commit(repo, commitMessage, monitor);
+							//Disabling Commit System
+							//commit(repo, commitMessage, monitor);
 							push(repo, monitor);
 						} catch (CoreException e) {
 							e.printStackTrace();
@@ -89,7 +90,6 @@ public class PushUtils {
 		return null;
 	}
 
-	private void push(Repository repo, IProgressMonitor monitor) {
-		//TODO: Push
+	private void push(Repository repo, IProgressMonitor monitor) throws CoreException {
 	}
 }
