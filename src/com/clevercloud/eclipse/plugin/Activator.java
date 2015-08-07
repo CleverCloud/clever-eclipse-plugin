@@ -12,7 +12,7 @@ import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "com.clevercloud.eclipse.plugin"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "clever-eclipse"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

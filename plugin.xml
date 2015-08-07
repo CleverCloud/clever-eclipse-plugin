@@ -30,15 +30,4 @@
             name="Import from Clever Cloud">
       </wizard>
    </extension>
-	<extension
-         point="org.eclipse.egit.ui.cloneSourceProvider">
-      <source
-            hasFixLocation="true"
-            icon="icons/clever16.png"
-            label="TOTOAST">
-      </source>
-      <repositorySearchPage
-            class="com.clevercloud.eclipse.plugin.ui.wizards.ImportSelectionPage">
-      </repositorySearchPage>
-   </extension>
 </plugin>
