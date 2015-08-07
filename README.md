@@ -11,21 +11,21 @@ For building the plugin with maven it's easy. You just have to run
 
 For openning the plugin in eclipse it's a bit harder.
 
-###### 2.1-Installing the eclipse plugins
+#### 2.1-Installing the eclipse plugins
 1. Open `Help->Install New Software...`
 2. In `Work with:` field select `--All Available Sites--`
 3. Search and Install :
  * Eclipse RCP Plug-in Developer Resources
  * Eclipse e4 Tools Developer Resources
 
-###### 2.2-Installing m2e integration plugin
+#### 2.2-Installing m2e integration plugin
 1. Open `Window->Preferences->Maven->Discovery`
 2. Click on `Open Catalog`
 3. Search and Install :
  * `m2e connector for maven-dependency-plugin`
  * `Tycho Configurator`
 
-###### 2.3-(Optional) Install e4tools plugin
+#### 2.3-(Optional) Install e4tools plugin
 1. Open `Help->Install New Software...`
 2. Click `Add...` button
 3. Add `https://dl.bintray.com/vogellacompany/e4tools/`
