@@ -11,6 +11,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.egit.core.op.CommitOperation;
+import org.eclipse.egit.core.op.PushOperation;
+import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jgit.lib.PersonIdent;
@@ -21,6 +23,7 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 import com.clevercloud.eclipse.plugin.ui.CommitDialog;
 
+@SuppressWarnings("restriction")
 public class PushUtils {
 
 	private IProject project;
@@ -91,5 +94,8 @@ public class PushUtils {
 	}
 
 	private void push(Repository repo, IProgressMonitor monitor) throws CoreException {
+		//TODO: Create a Temp remote
+		PushOperationSpecification specs = new PushOperationSpecification();
+		PushOperation op = new PushOperation(repo, specs, false, 0);
 	}
 }

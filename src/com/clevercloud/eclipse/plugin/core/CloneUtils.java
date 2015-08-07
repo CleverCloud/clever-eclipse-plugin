@@ -23,6 +23,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
 
+@SuppressWarnings("restriction")
 public class CloneUtils {
 
 	private String name;
