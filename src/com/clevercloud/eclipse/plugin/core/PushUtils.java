@@ -21,8 +21,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-import com.clevercloud.eclipse.plugin.ui.CommitDialog;
-
 @SuppressWarnings("restriction")
 public class PushUtils {
 
@@ -45,15 +43,10 @@ public class PushUtils {
 		for (String remote : repo.getRemoteNames()) {
 			//TODO: Regex match repo
 			if (remote.equals("clever")) {
-				//final String commitMessage = getCommitMessage(shell);
-				//if (commitMessage == null)
-				//	return true;
 				Job job = new Job(this.project.getName()) {
 					@Override
 					protected IStatus run(IProgressMonitor monitor) {
 						try {
-							//Disabling Commit System
-							//commit(repo, commitMessage, monitor);
 							push(repo, monitor);
 						} catch (CoreException e) {
 							e.printStackTrace();
@@ -72,27 +65,6 @@ public class PushUtils {
 		}
 		return false;
 	}
-
-	private void commit(Repository repo, String commitMessage, IProgressMonitor monitor) throws CoreException {
-		//TODO: Use identity of user
-		PersonIdent commiter = new PersonIdent("Wilson", "lost@perdu.com");
-		CommitOperation commit = new CommitOperation(repo, commiter.toExternalString(), commiter.toExternalString(), commitMessage);
-		commit.setCommitAll(true);
-		commit.execute(monitor);
-	}
-
-	private String getCommitMessage(Shell shell) {
-		CommitDialog commitDialog = new CommitDialog(shell);
-		commitDialog.create();
-		if (commitDialog.open() == Window.OK) {
-			String commit = commitDialog.getCommitMessage();
-			if (commit.equals(""))
-				commit = "Commited by Clever Cloud Eclipse plugin.";
-			return commit;
-		}
-		return null;
-	}
-
 	private void push(Repository repo, IProgressMonitor monitor) throws CoreException {
 		//TODO: Create a Temp remote
 		PushOperationSpecification specs = new PushOperationSpecification();
