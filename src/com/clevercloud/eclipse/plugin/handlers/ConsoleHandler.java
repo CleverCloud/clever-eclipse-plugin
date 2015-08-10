@@ -2,6 +2,7 @@ package com.clevercloud.eclipse.plugin.handlers;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -11,6 +12,7 @@ import org.eclipse.ui.PlatformUI;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
+import com.clevercloud.eclipse.plugin.CleverNature;
 import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 import com.clevercloud.eclipse.plugin.core.PushUtils;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
@@ -51,9 +53,15 @@ public class ConsoleHandler {
 			IFileEditorInput input = (IFileEditorInput)editor.getEditorInput();
 			IFile file = input.getFile();
 			IProject project = file.getProject();
-			PushUtils op = new PushUtils(project);
-			if (op.execute(shell))
-				return true;
+			try {
+				if (project.hasNature(CleverNature.NATURE_ID)) {
+					PushUtils op = new PushUtils(project);
+					op.execute(shell);
+					return true;
+				}
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}

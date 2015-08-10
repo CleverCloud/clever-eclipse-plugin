@@ -37,10 +37,10 @@ public class PushUtils {
 		this.mapping = RepositoryMapping.getMapping(new Path(folder.getAbsolutePath()));
 	}
 
-	public boolean execute(Shell shell) {
+	public void execute(Shell shell) {
 		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench().getService(IWorkbenchSiteProgressService.class);
 		if (this.mapping == null)
-			return false;
+			return;
 		final Repository repo = this.mapping.getRepository();
 
 		//TODO: Regex match repo
@@ -62,7 +62,6 @@ public class PushUtils {
 		} else {
 			job.schedule();
 		}
-		return true;
 	}
 	private void push(Repository repo, IProgressMonitor monitor) throws URISyntaxException, InvocationTargetException, IOException {
 		//TODO:Use the true repo url

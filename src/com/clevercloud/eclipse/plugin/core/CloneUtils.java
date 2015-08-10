@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -22,6 +23,8 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
+
+import com.clevercloud.eclipse.plugin.CleverNature;
 
 @SuppressWarnings("restriction")
 public class CloneUtils {
@@ -64,15 +67,16 @@ public class CloneUtils {
 		IProjectDescription desc;
 		if (projectFile.exists()) {
 			desc = ResourcesPlugin.getWorkspace().loadProjectDescription(new Path(projectFile.getAbsolutePath()));
+			desc.setNatureIds(ArrayUtils.add(desc.getNatureIds(), CleverNature.NATURE_ID));
 			project.create(desc, monitor);
 			project.open(monitor);
 		} else {
 			project.create(monitor);
 			project.open(monitor);
 			desc = project.getDescription();
-			desc.setNatureIds(new String[] {JavaCore.NATURE_ID});
-			project.setDescription(desc, monitor);
 			//TODO: Set langage plugin
+			desc.setNatureIds(new String[] {JavaCore.NATURE_ID, CleverNature.NATURE_ID});
+			project.setDescription(desc, monitor);
 		}
 		monitor.worked(1);
 		monitor.done();
