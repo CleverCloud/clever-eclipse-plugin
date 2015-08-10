@@ -1,22 +1,23 @@
 package com.clevercloud.eclipse.plugin.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.egit.core.op.CommitOperation;
 import org.eclipse.egit.core.op.PushOperation;
-import org.eclipse.egit.core.op.PushOperationSpecification;
 import org.eclipse.egit.core.project.RepositoryMapping;
-import org.eclipse.jface.window.Window;
-import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
+import org.eclipse.jgit.transport.RemoteConfig;
+import org.eclipse.jgit.transport.URIish;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
@@ -27,6 +28,8 @@ public class PushUtils {
 	private IProject project;
 	private File folder;
 	private RepositoryMapping mapping;
+	
+	private static final String REMOTE_NAME = "com.clevercloud.eclipse.plugin.remote.temp";
 
 	public PushUtils(IProject project) {
 		this.project = project;
@@ -40,34 +43,40 @@ public class PushUtils {
 			return false;
 		final Repository repo = this.mapping.getRepository();
 
-		for (String remote : repo.getRemoteNames()) {
-			//TODO: Regex match repo
-			if (remote.equals("clever")) {
-				Job job = new Job(this.project.getName()) {
-					@Override
-					protected IStatus run(IProgressMonitor monitor) {
-						try {
-							push(repo, monitor);
-						} catch (CoreException e) {
-							e.printStackTrace();
-							return Status.CANCEL_STATUS;
-						}
-						return Status.OK_STATUS;
-					}
-				};
-				if (progress != null) {
-					progress.schedule(job);
-				} else {
-					job.schedule();
+		//TODO: Regex match repo
+		//TODO: Use .clever.json file for project informations
+		Job job = new Job(this.project.getName()) {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					push(repo, monitor);
+				} catch (InvocationTargetException | URISyntaxException | IOException e) {
+					e.printStackTrace();
+					return Status.CANCEL_STATUS;
 				}
-				return true;
+				return Status.OK_STATUS;
 			}
+		};
+		if (progress != null) {
+			progress.schedule(job);
+		} else {
+			job.schedule();
 		}
-		return false;
+		return true;
 	}
-	private void push(Repository repo, IProgressMonitor monitor) throws CoreException {
-		//TODO: Create a Temp remote
-		PushOperationSpecification specs = new PushOperationSpecification();
-		PushOperation op = new PushOperation(repo, specs, false, 0);
+	private void push(Repository repo, IProgressMonitor monitor) throws URISyntaxException, InvocationTargetException, IOException {
+		//TODO:Use the true repo url
+		URIish uri = new URIish("git@gitlab.clever-cloud.com:drouardb/testrepo.git");
+		StoredConfig config = repo.getConfig();
+		RemoteConfig remoteConfig = new RemoteConfig(config, REMOTE_NAME);
+		remoteConfig.addURI(uri);
+		remoteConfig.update(config);
+		config.save();
+		//TODO: Use force push (true/false) ??
+		PushOperation op = new PushOperation(repo, REMOTE_NAME, false, 0);
+		op.run(monitor);
+		remoteConfig.removeURI(uri);
+		remoteConfig.update(config);
+		config.save();
 	}
 }
