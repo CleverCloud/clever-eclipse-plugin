@@ -52,7 +52,8 @@ public class CleverWizard extends Wizard implements IImportWizard {
 		Job job = new Job(selected.getName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				CloneUtils op = new CloneUtils(selected.getName(), selected.getDeployment().getUrl(), monitor);
+				CloneUtils op = new CloneUtils(selected.getName(), selected.getDeployment().getUrl(),
+						selected.getId(), monitor);
 				try {
 					return op.execute();
 				} catch (InvocationTargetException | URISyntaxException | InterruptedException | CoreException e) {

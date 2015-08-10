@@ -13,6 +13,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.Activator;
@@ -30,13 +31,19 @@ import com.clevercloud.eclipse.plugin.CleverNature;
 public class CloneUtils {
 
 	private String name;
+	private String id;
 	private String url;
 	private IProgressMonitor monitor;
 	private RepositoryUtil repositoryUtil;
 	private IPreferenceStore store;
 
-	public CloneUtils(String name, String url, IProgressMonitor monitor) {
+	private QualifiedName idQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "id");
+	private QualifiedName nameQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "name");
+	private QualifiedName gitQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "url");
+
+	public CloneUtils(String name, String url, String id, IProgressMonitor monitor) {
 		this.name = name;
+		this.id = id;
 		this.url = url;
 		this.monitor = monitor;
 		this.repositoryUtil = Activator.getDefault().getRepositoryUtil();
@@ -44,7 +51,7 @@ public class CloneUtils {
 	}
 
 	public IStatus execute() throws URISyntaxException, InvocationTargetException, InterruptedException, CoreException {
-		monitor.beginTask(this.name, 3);
+		monitor.beginTask(this.name, 4);
 		monitor.setTaskName("Creating repository");
 		URIish uri = new URIish(this.url);
 		File cloneDir = new File(Platform.getLocation().toOSString(), this.name);
@@ -78,6 +85,12 @@ public class CloneUtils {
 			desc.setNatureIds(new String[] {JavaCore.NATURE_ID, CleverNature.NATURE_ID});
 			project.setDescription(desc, monitor);
 		}
+		monitor.worked(1);
+
+		monitor.setTaskName("Loading properties");
+		project.setPersistentProperty(gitQualified, url);
+		project.setPersistentProperty(nameQualified, name);
+		project.setPersistentProperty(idQualified, id);
 		monitor.worked(1);
 		monitor.done();
 		return Status.OK_STATUS;
