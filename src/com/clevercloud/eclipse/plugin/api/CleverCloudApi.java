@@ -77,4 +77,8 @@ public class CleverCloudApi extends DefaultApi10a {
 		Response response = request.send();
 		return response.getBody();
 	}
+
+	public static String getOrgaUrl(String orga) {
+		return (orga.equals("self") ? "/" : "/organisations/") + orga;
+	}
 }
