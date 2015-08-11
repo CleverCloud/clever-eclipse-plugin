@@ -53,7 +53,7 @@ public class CleverWizard extends Wizard implements IImportWizard {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				CloneUtils op = new CloneUtils(selected.getName(), selected.getDeployment().getUrl(),
-						selected.getId(), monitor);
+						selected.getId(), selected.getParent().getId(), monitor);
 				try {
 					return op.execute();
 				} catch (InvocationTargetException | URISyntaxException | InterruptedException | CoreException e) {

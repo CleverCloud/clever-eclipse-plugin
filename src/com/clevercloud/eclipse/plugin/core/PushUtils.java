@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -26,13 +27,15 @@ import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 public class PushUtils {
 
 	private IProject project;
+	private PreferencesUtils prefs;
 	private File folder;
 	private RepositoryMapping mapping;
-	
+
 	private static final String REMOTE_NAME = "com.clevercloud.eclipse.plugin.remote.temp";
 
 	public PushUtils(IProject project) {
 		this.project = project;
+		this.prefs = new PreferencesUtils(project, true);
 		this.folder = new File(Platform.getLocation().toOSString() + this.project.getFullPath().toString());
 		this.mapping = RepositoryMapping.getMapping(new Path(folder.getAbsolutePath()));
 	}
@@ -50,7 +53,7 @@ public class PushUtils {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					push(repo, monitor);
-				} catch (InvocationTargetException | URISyntaxException | IOException e) {
+				} catch (InvocationTargetException | URISyntaxException | IOException | CoreException e) {
 					e.printStackTrace();
 					return Status.CANCEL_STATUS;
 				}
@@ -63,9 +66,11 @@ public class PushUtils {
 			job.schedule();
 		}
 	}
-	private void push(Repository repo, IProgressMonitor monitor) throws URISyntaxException, InvocationTargetException, IOException {
+	private void push(Repository repo, IProgressMonitor monitor) throws URISyntaxException,
+	InvocationTargetException, IOException, CoreException {
 		//TODO:Use the true repo url
-		URIish uri = new URIish("git@gitlab.clever-cloud.com:drouardb/testrepo.git");
+		String url = prefs.getGitUrl();
+		URIish uri = new URIish(url);
 		StoredConfig config = repo.getConfig();
 		RemoteConfig remoteConfig = new RemoteConfig(config, REMOTE_NAME);
 		remoteConfig.addURI(uri);

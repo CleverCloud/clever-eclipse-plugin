@@ -13,7 +13,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.egit.core.Activator;
@@ -33,18 +32,16 @@ public class CloneUtils {
 	private String name;
 	private String id;
 	private String url;
+	private String orga;
 	private IProgressMonitor monitor;
 	private RepositoryUtil repositoryUtil;
 	private IPreferenceStore store;
 
-	private QualifiedName idQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "id");
-	private QualifiedName nameQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "name");
-	private QualifiedName gitQualified = new QualifiedName("com.clevercloud.eclipse.plugin", "url");
-
-	public CloneUtils(String name, String url, String id, IProgressMonitor monitor) {
+	public CloneUtils(String name, String url, String id, String orga, IProgressMonitor monitor) {
 		this.name = name;
 		this.id = id;
 		this.url = url;
+		this.orga = orga;
 		this.monitor = monitor;
 		this.repositoryUtil = Activator.getDefault().getRepositoryUtil();
 		this.store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
@@ -88,9 +85,12 @@ public class CloneUtils {
 		monitor.worked(1);
 
 		monitor.setTaskName("Loading properties");
-		project.setPersistentProperty(gitQualified, url);
-		project.setPersistentProperty(nameQualified, name);
-		project.setPersistentProperty(idQualified, id);
+		PreferencesUtils prefs = new PreferencesUtils(project, false);
+		prefs.setName(name);
+		prefs.setGitUrl(url);
+		prefs.setId(id);
+		prefs.setOrga(orga);
+		prefs.save();
 		monitor.worked(1);
 		monitor.done();
 		return Status.OK_STATUS;
