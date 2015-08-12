@@ -48,7 +48,7 @@ public class CloneUtils {
 	}
 
 	public IStatus execute() throws URISyntaxException, InvocationTargetException, InterruptedException, CoreException {
-		monitor.beginTask(this.name, 4);
+		monitor.beginTask(this.name, 5);
 		monitor.setTaskName("Creating repository");
 		URIish uri = new URIish(this.url);
 		File cloneDir = new File(Platform.getLocation().toOSString(), this.name);
@@ -79,7 +79,7 @@ public class CloneUtils {
 			project.open(monitor);
 			desc = project.getDescription();
 			//TODO: Set langage plugin
-			desc.setNatureIds(new String[] {JavaCore.NATURE_ID, CleverNature.NATURE_ID});
+			desc.setNatureIds(new String[] {JavaCore.NATURE_ID});
 			project.setDescription(desc, monitor);
 		}
 		monitor.worked(1);
@@ -91,6 +91,10 @@ public class CloneUtils {
 		prefs.setId(id);
 		prefs.setOrga(orga);
 		prefs.save();
+		monitor.worked(1);
+
+		monitor.setTaskName("Loading clever nature");
+		CleverNature.addProjectNature(project, monitor);
 		monitor.worked(1);
 		monitor.done();
 		return Status.OK_STATUS;
