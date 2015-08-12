@@ -62,13 +62,13 @@
                </with>
             </visibleWhen>
             <command
-                  commandId="com.clevercloud.eclipse.plugin.command.consoleCommand"
+                  commandId="com.clevercloud.eclipse.plugin.command.appCreatorCommand"
                   icon="icons/application_add.png"
                   label="Create an app"
                   style="push">
             </command>
             <command
-                  commandId="com.clevercloud.eclipse.plugin.command.consoleCommand"
+                  commandId="com.clevercloud.eclipse.plugin.command.appLinkerCommand"
                   icon="icons/application_link.png"
                   label="Link to an existing app"
                   style="push">
@@ -128,6 +128,14 @@
             class="com.clevercloud.eclipse.plugin.handlers.CreditsHandler"
             commandId="com.clevercloud.eclipse.plugin.command.creditsCommand">
       </handler>
+      <handler
+            class="com.clevercloud.eclipse.plugin.handlers.AppLinkerHandler"
+            commandId="com.clevercloud.eclipse.plugin.command.appLinkerCommand">
+      </handler>
+      <handler
+            class="com.clevercloud.eclipse.plugin.handlers.AppCreatorHandler"
+            commandId="com.clevercloud.eclipse.plugin.command.appCreatorCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -142,6 +150,14 @@
       <command
             id="com.clevercloud.eclipse.plugin.command.creditsCommand"
             name="Credits">
+      </command>
+      <command
+            id="com.clevercloud.eclipse.plugin.command.appLinkerCommand"
+            name="AppLinker">
+      </command>
+      <command
+            id="com.clevercloud.eclipse.plugin.command.appCreatorCommand"
+            name="AppCreator">
       </command>
    </extension>
 </plugin>
