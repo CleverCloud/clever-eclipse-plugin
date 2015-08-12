@@ -16,7 +16,6 @@ For opening the plug-in in eclipse it's a bit harder.
 2. In `Work with:` field select `--All Available Sites--`
 3. Search and Install :
  * Eclipse RCP Plug-in Developer Resources
- * Eclipse e4 Tools Developer Resources
 
 #### 2.2-Installing m2e integration plug-ins
 1. Open `Window->Preferences->Maven->Discovery`

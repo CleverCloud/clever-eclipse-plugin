@@ -1,14 +1,16 @@
 package com.clevercloud.eclipse.plugin.handlers;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
@@ -18,17 +20,7 @@ import com.clevercloud.eclipse.plugin.core.PushUtils;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
 import com.clevercloud.eclipse.plugin.ui.wizards.CleverWizard;
 
-public class ConsoleHandler {
-
-	@Execute
-	public void execute(Shell shell) {
-		if (CleverCloudApi.accessToken == null) {
-			this.executeLogin(shell);
-			return;
-		}
-		if (executePush(shell) == false)
-			importWizard(shell);
-	}
+public class ConsoleHandler extends AbstractHandler {
 
 	private void executeLogin(Shell shell) {
 		Token requestToken = CleverCloudApi.oauth.getRequestToken();
@@ -64,5 +56,17 @@ public class ConsoleHandler {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Object execute(ExecutionEvent event) {
+		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
+		if (CleverCloudApi.accessToken == null) {
+			this.executeLogin(shell);
+			return null;
+		}
+		if (executePush(shell) == false)
+			importWizard(shell);
+		return null;
 	}
 }
