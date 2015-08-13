@@ -11,28 +11,13 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
 
 import com.clevercloud.eclipse.plugin.CleverNature;
 import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 import com.clevercloud.eclipse.plugin.core.PushUtils;
-import com.clevercloud.eclipse.plugin.ui.LoginUI;
 import com.clevercloud.eclipse.plugin.ui.wizards.ImportWizard;
 
 public class ConsoleHandler extends AbstractHandler {
-
-	private void executeLogin(Shell shell) {
-		Token requestToken = CleverCloudApi.oauth.getRequestToken();
-		String authURL = CleverCloudApi.oauth.getAuthorizationUrl(requestToken);
-		LoginUI login = new LoginUI(shell, authURL);
-		login.openLogin();
-
-		if (CleverCloudApi.oauthVerifier == null)
-			return;
-		Verifier verifier = new Verifier(CleverCloudApi.oauthVerifier);
-		CleverCloudApi.accessToken = CleverCloudApi.oauth.getAccessToken(requestToken, verifier);
-	}
 
 	private void importWizard(Shell shell) {
 		WizardDialog dial = new WizardDialog(shell, new ImportWizard());
@@ -61,8 +46,8 @@ public class ConsoleHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) {
 		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
-		if (CleverCloudApi.accessToken == null) {
-			this.executeLogin(shell);
+		if (!CleverCloudApi.isAuthentified()) {
+			CleverCloudApi.executeLogin(shell);
 			return null;
 		}
 		if (executePush(shell) == false)

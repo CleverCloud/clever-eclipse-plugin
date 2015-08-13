@@ -27,7 +27,7 @@ public class ImportWizard extends Wizard implements IImportWizard {
 
 	public ImportWizard() {
 		super();
-		if (CleverCloudApi.accessToken == null) {
+		if (!CleverCloudApi.isAuthentified()) {
 			MessageDialog.openError(getShell(), "Login Error", "You must be logged in for importing a project.");
 			this.performCancel();
 			return;

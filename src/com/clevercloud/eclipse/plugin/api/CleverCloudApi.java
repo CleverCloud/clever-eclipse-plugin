@@ -3,13 +3,18 @@ package com.clevercloud.eclipse.plugin.api;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.widgets.Shell;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
+import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
+
+import com.clevercloud.eclipse.plugin.ui.LoginUI;
 
 public class CleverCloudApi extends DefaultApi10a {
 
@@ -22,10 +27,10 @@ public class CleverCloudApi extends DefaultApi10a {
 	private static final String CALLBACK_URL =  "https://console.clever-cloud.com/cli-oauth";
 
 	public static String user = null;
-	public static String oauthToken = null;
-	public static String oauthVerifier = null;
-	public static Token accessToken = null;
-	public static OAuthService oauth = null;
+	private static String oauthToken = null;
+	private static String oauthVerifier = null;
+	private static Token accessToken = null;
+	private static OAuthService oauth = null;
 
 	@Override
 	public String getAccessTokenEndpoint() {
@@ -40,6 +45,27 @@ public class CleverCloudApi extends DefaultApi10a {
 	@Override
 	public String getAuthorizationUrl(Token requestToken) {
 		return String.format(AUTHORIZE_URL, requestToken.getToken());
+	}
+
+	public static void loadApi() {
+		CleverCloudApi.oauth = new ServiceBuilder()
+				.provider(CleverCloudApi.class)
+				.apiKey(API_KEY)
+				.apiSecret(API_SECRET)
+				.callback(CALLBACK_URL)
+				.build();
+	}
+
+	public static void executeLogin(Shell shell) {
+		Token requestToken = CleverCloudApi.oauth.getRequestToken();
+		String authURL = CleverCloudApi.oauth.getAuthorizationUrl(requestToken);
+		LoginUI login = new LoginUI(shell, authURL);
+		login.openLogin();
+
+		if (CleverCloudApi.oauthVerifier == null)
+			return;
+		Verifier verifier = new Verifier(CleverCloudApi.oauthVerifier);
+		CleverCloudApi.accessToken = CleverCloudApi.oauth.getAccessToken(requestToken, verifier);
 	}
 
 	public static void saveTokens(String strurl) {
@@ -63,13 +89,15 @@ public class CleverCloudApi extends DefaultApi10a {
 		}
 	}
 
-	public static void loadApi() {
-		CleverCloudApi.oauth = new ServiceBuilder()
-				.provider(CleverCloudApi.class)
-				.apiKey(API_KEY)
-				.apiSecret(API_SECRET)
-				.callback(CALLBACK_URL)
-				.build();
+	public static boolean isAuthentified() {
+		if (CleverCloudApi.accessToken == null)
+			return false;
+		return true;
+	}
+
+	public static void disconnect() {
+		CleverCloudApi.accessToken = null;
+		Browser.clearSessions();
 	}
 
 	public static String apiRequest(String url) {
