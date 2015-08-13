@@ -17,7 +17,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.core.CloneUtils;
 
@@ -27,7 +27,7 @@ public class ImportWizard extends Wizard implements IImportWizard {
 
 	public ImportWizard() {
 		super();
-		if (!CleverCloudApi.isAuthentified()) {
+		if (!CcApi.isAuthentified()) {
 			MessageDialog.openError(getShell(), "Login Error", "You must be logged in for importing a project.");
 			this.performCancel();
 			return;

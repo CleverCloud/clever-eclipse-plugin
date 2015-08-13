@@ -13,7 +13,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.clevercloud.eclipse.plugin.CleverNature;
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.clevercloud.eclipse.plugin.core.PushUtils;
 import com.clevercloud.eclipse.plugin.ui.wizards.ImportWizard;
 
@@ -46,8 +46,8 @@ public class ConsoleHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) {
 		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
-		if (!CleverCloudApi.isAuthentified()) {
-			CleverCloudApi.executeLogin(shell);
+		if (!CcApi.isAuthentified()) {
+			CcApi.getInstance().executeLogin(shell);
 			return null;
 		}
 		if (executePush(shell) == false)

@@ -4,7 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -34,7 +34,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		CleverCloudApi.loadApi();
+		CcApi.getInstance();
 	}
 
 	/*

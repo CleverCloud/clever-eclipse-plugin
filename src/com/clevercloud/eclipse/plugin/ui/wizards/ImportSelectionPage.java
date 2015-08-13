@@ -17,7 +17,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.api.json.CleverServiceJSON;
 import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
@@ -47,10 +47,11 @@ public class ImportSelectionPage extends WizardPage {
 		try {
 			OrganisationJSON self = new OrganisationJSON();
 			self.setId("self");
-			SelfJSON selfInfo = objectMapper.readValue(CleverCloudApi.apiRequest("/self"), SelfJSON.class);
+			SelfJSON selfInfo = objectMapper.readValue(CcApi.getInstance().apiRequest("/self"), SelfJSON.class);
 			self.setName(selfInfo.getName());
 
-			OrganisationJSON[] orgas = objectMapper.readValue(CleverCloudApi.apiRequest("/organisations?user=" + CleverCloudApi.user), OrganisationJSON[].class);
+			OrganisationJSON[] orgas = objectMapper.readValue(CcApi.getInstance()
+					.apiRequest("/organisations?user=" + CcApi.getInstance().getUser()), OrganisationJSON[].class);
 			orgas = ArrayUtils.add(orgas, self);
 			this.createTree(orgas);
 

@@ -3,13 +3,13 @@ package com.clevercloud.eclipse.plugin.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 
 public class DisconnectionHandler extends AbstractHandler {
 
 	@Override
 	public boolean isEnabled() {
-		if (CleverCloudApi.isAuthentified()) {
+		if (CcApi.isAuthentified()) {
 			return true;
 		}
 		return false;
@@ -17,7 +17,7 @@ public class DisconnectionHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) {
-		CleverCloudApi.disconnect();
+		CcApi.disconnect();
 		return null;
 	}
 }

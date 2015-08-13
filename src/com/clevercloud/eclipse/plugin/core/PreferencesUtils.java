@@ -8,7 +8,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.clevercloud.eclipse.plugin.Activator;
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -80,12 +80,14 @@ public class PreferencesUtils {
 	}
 
 	public boolean updateValues() {
+		if (!CcApi.isAuthentified())
+			return false;
 		String orga = this.getOrga();
 		String id = this.getId();
 		String name = this.getName();
 		String url = this.getGitUrl();
 		ObjectMapper mapper = new ObjectMapper();
-		String request = CleverCloudApi.apiRequest(CleverCloudApi.getOrgaUrl(orga) + "/applications/" + id);
+		String request = CcApi.getInstance().apiRequest(CcApi.getOrgaUrl(orga) + "/applications/" + id);
 		try {
 			ApplicationJSON app = mapper.readValue(request, ApplicationJSON.class);
 			if (!name.equals(app.getName()))

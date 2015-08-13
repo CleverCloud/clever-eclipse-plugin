@@ -11,8 +11,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
-
 public class LoginUI {
 
 	private static final String LOGIN_URL = "https://api.clever-cloud.com/v2/session/login";
@@ -34,7 +32,8 @@ public class LoginUI {
 		this.browser.setUrl(url);
 	}
 
-	public void openLogin() {
+	public String openLogin() {
+		String callbackUrl = null;
 		this.shell.open();
 
 		while (!this.shell.isDisposed()) {
@@ -43,7 +42,7 @@ public class LoginUI {
 					|| browser.getUrl().startsWith(GITHUB_LOGIN_URL) || browser
 					.getUrl().startsWith(OAUTH_URL))) {
 				if (browser.getUrl().startsWith(CONSOLE_URL)) {
-					CleverCloudApi.saveTokens(browser.getUrl());
+					callbackUrl = browser.getUrl();
 				} else {
 					try {
 						Desktop.getDesktop().browse(new URI(browser.getUrl()));
@@ -53,10 +52,11 @@ public class LoginUI {
 				}
 				this.browser.dispose();
 				this.shell.close();
-				return;
+				return callbackUrl;
 			}
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
+		return callbackUrl;
 	}
 }

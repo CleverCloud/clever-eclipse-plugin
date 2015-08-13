@@ -2,7 +2,7 @@ package com.clevercloud.eclipse.plugin.api.json;
 
 import java.io.IOException;
 
-import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
+import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class OrganisationJSON extends CleverServiceJSON {
 
 	public ApplicationJSON[] getChilds() {
+		if (!CcApi.isAuthentified())
+			return null;
 		ObjectMapper mapper = new ObjectMapper();
-		String json = CleverCloudApi.apiRequest(CleverCloudApi.getOrgaUrl(this.getId()) + "/applications");
+		String json = CcApi.getInstance().apiRequest(CcApi.getOrgaUrl(this.getId()) + "/applications");
 		ApplicationJSON[] childs = null;
 		try {
 			childs = mapper.readValue(json, ApplicationJSON[].class);
