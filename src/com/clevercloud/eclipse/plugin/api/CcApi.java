@@ -24,7 +24,6 @@ public class CcApi {
 	private static final String API_CALLBACK = "https://console.clever-cloud.com/cli-oauth";
 
 	private OAuthService oauth = null;
-	private String oauthToken = null;
 	private String oauthVerifier = null;
 	private String user = null;
 	private Token accessToken = null;
@@ -66,9 +65,6 @@ public class CcApi {
 			String[] datas = url.getQuery().split("&");
 			for (String data : datas) {
 				data.replace("?", "");
-				if (data.startsWith("oauth_token=")) {
-					oauthToken = data.split("=")[1];
-				}
 				if (data.startsWith("oauth_verifier=")) {
 					oauthVerifier = data.split("=")[1];
 				}
@@ -100,6 +96,14 @@ public class CcApi {
 
 	public String apiRequest(String url) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, CleverCloudApi.BASE_URL + url);
+		this.oauth.signRequest(this.accessToken, request);
+		Response response = request.send();
+		return response.getBody();
+	}
+
+	public String logRequest(String appid, Integer limit) {
+		OAuthRequest request = new OAuthRequest(Verb.GET,
+				CleverCloudApi.LOGS_URL + appid + "?limit=" + limit.toString());
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();

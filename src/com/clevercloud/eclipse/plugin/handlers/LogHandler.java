@@ -7,6 +7,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.core.PreferencesUtils;
+
 public class LogHandler extends AbstractHandler {
 
 	@Override
@@ -15,9 +18,8 @@ public class LogHandler extends AbstractHandler {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveWorkbenchWindow(event)
 				.getSelectionService().getSelection();
 		IProject project = (IProject) selection.getFirstElement();
-		System.out.println(project.getName());
-		//String logs = CleverCloudApi.logRequest("app_2c98f932-745c-4a00-87c0-01735a771f06", 300);
-		//System.out.println(logs);
+		PreferencesUtils prefs = new PreferencesUtils(project, false);
+		System.out.println(CcApi.getInstance().logRequest(prefs.getId(), 300));
 		return null;
 	}
 }
