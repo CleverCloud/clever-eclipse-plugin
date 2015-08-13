@@ -14,6 +14,7 @@ import org.scribe.oauth.OAuthService;
 public class CleverCloudApi extends DefaultApi10a {
 
 	public static final String BASE_URL = "https://api.clever-cloud.com/v2";
+	private static final String LOGS_URL = "https://logs-api.clever-cloud.com/logs/";
 	private static final String AUTHORIZE_URL = BASE_URL + "/oauth/authorize?oauth_token=%s";
 
 	private static final String API_KEY = "T8NZNyJejYkevYvKj1EWgSq0rnXABH";
@@ -73,6 +74,13 @@ public class CleverCloudApi extends DefaultApi10a {
 
 	public static String apiRequest(String url) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, BASE_URL + url);
+		oauth.signRequest(accessToken, request);
+		Response response = request.send();
+		return response.getBody();
+	}
+
+	public static String logRequest(String appid, Integer limit) {
+		OAuthRequest request = new OAuthRequest(Verb.GET, LOGS_URL + appid + "?limit=" + limit.toString());
 		oauth.signRequest(accessToken, request);
 		Response response = request.send();
 		return response.getBody();

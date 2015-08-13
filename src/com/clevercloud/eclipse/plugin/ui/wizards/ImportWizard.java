@@ -21,11 +21,11 @@ import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.core.CloneUtils;
 
-public class CleverWizard extends Wizard implements IImportWizard {
+public class ImportWizard extends Wizard implements IImportWizard {
 
 	private ImportSelectionPage page = null;
 
-	public CleverWizard() {
+	public ImportWizard() {
 		super();
 		if (CleverCloudApi.accessToken == null) {
 			MessageDialog.openError(getShell(), "Login Error", "You must be logged in for importing a project.");

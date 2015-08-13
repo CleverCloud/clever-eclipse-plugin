@@ -18,7 +18,7 @@ import com.clevercloud.eclipse.plugin.CleverNature;
 import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 import com.clevercloud.eclipse.plugin.core.PushUtils;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
-import com.clevercloud.eclipse.plugin.ui.wizards.CleverWizard;
+import com.clevercloud.eclipse.plugin.ui.wizards.ImportWizard;
 
 public class ConsoleHandler extends AbstractHandler {
 
@@ -35,7 +35,7 @@ public class ConsoleHandler extends AbstractHandler {
 	}
 
 	private void importWizard(Shell shell) {
-		WizardDialog dial = new WizardDialog(shell, new CleverWizard());
+		WizardDialog dial = new WizardDialog(shell, new ImportWizard());
 		dial.open();
 	}
 

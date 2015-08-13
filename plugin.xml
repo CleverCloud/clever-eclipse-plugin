@@ -17,7 +17,7 @@
          point="org.eclipse.ui.importWizards">
       <wizard
             category="org.eclipse.egit.ui.internal.clone.gitclonecategory"
-            class="com.clevercloud.eclipse.plugin.ui.wizards.CleverWizard"
+            class="com.clevercloud.eclipse.plugin.ui.wizards.ImportWizard"
             icon="icons/clever16.png"
             id="com.clevercloud.eclipse.plugin.ui.wizards.importCleverWizard"
             name="Import from Clever Cloud">
@@ -71,6 +71,33 @@
                   commandId="com.clevercloud.eclipse.plugin.command.appLinkerCommand"
                   icon="icons/application_link.png"
                   label="Link to an existing app"
+                  style="push">
+            </command>
+         </menu>
+         <menu
+               icon="icons/clever16.png"
+               label="Clever Cloud">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <and>
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="clever-eclipse.clevernature">
+                           </test>
+                        </and>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+            <command
+                  commandId="com.clevercloud.eclipse.plugin.command.logCommand"
+                  icon="icons/application_osx_terminal.png"
+                  label="Application logs"
                   style="push">
             </command>
          </menu>
@@ -136,6 +163,10 @@
             class="com.clevercloud.eclipse.plugin.handlers.AppCreatorHandler"
             commandId="com.clevercloud.eclipse.plugin.command.appCreatorCommand">
       </handler>
+      <handler
+            class="com.clevercloud.eclipse.plugin.handlers.LogHandler"
+            commandId="com.clevercloud.eclipse.plugin.command.logCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -158,6 +189,10 @@
       <command
             id="com.clevercloud.eclipse.plugin.command.appCreatorCommand"
             name="AppCreator">
+      </command>
+      <command
+            id="com.clevercloud.eclipse.plugin.command.logCommand"
+            name="Log">
       </command>
    </extension>
 </plugin>
