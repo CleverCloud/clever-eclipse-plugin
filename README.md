@@ -30,3 +30,8 @@ For opening the plug-in in eclipse it's a bit harder.
 3. Add `https://dl.bintray.com/vogellacompany/e4tools/`
 4. Select the spies you want
 5. Install them
+
+#### 2.4-Opening the project
+1. Import the project in eclipse
+2. Right click on the project and `Run As` -> `8 Maven Install`
+3. All the `Missing required library` errors will be solved
