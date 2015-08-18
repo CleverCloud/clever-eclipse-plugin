@@ -1,5 +1,7 @@
 package com.clevercloud.eclipse.plugin.api;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -13,7 +15,10 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
+import com.clevercloud.eclipse.plugin.api.json.WebSocketJSON;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class CcApi {
 
@@ -107,6 +112,23 @@ public class CcApi {
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();
+	}
+
+	public String wsLogSigner() {
+		OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.clever-cloud.com/v2");
+		this.oauth.signRequest(this.accessToken, request);
+		WebSocketJSON ws = new WebSocketJSON(request.getHeaders()
+				.toString().replace("{Authorization=", "").replace("}", ""));
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.INDENT_OUTPUT, false);
+		StringWriter writer = new StringWriter();
+		try {
+			mapper.writeValue(writer, ws);
+			return writer.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static String getOrgaUrl(String orga) {
