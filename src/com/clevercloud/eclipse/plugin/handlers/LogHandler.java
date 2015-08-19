@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.api.CleverCloudApi;
 import com.clevercloud.eclipse.plugin.core.ConsoleUtils;
 import com.clevercloud.eclipse.plugin.core.PreferencesUtils;
 import com.clevercloud.eclipse.plugin.core.WebSocketCore;
@@ -40,7 +41,7 @@ public class LogHandler extends AbstractHandler {
 		String timestamp = df.format(new Date());
 		try {
 			ConsoleUtils.showConsole(prefs.getName());
-			URI uri = new URI("wss://logs-api.clever-cloud.com/logs-socket/" + prefs.getId() + "?since=" + timestamp);
+			URI uri = new URI(String.format(CleverCloudApi.LOGS_SOKCET_URL, prefs.getId(), timestamp));
 			WebSocketCore ws = new WebSocketCore(uri, prefs.getName());
 			ws.connectBlocking();
 
