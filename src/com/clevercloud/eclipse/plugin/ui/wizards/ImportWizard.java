@@ -23,7 +23,7 @@ import com.clevercloud.eclipse.plugin.core.CloneUtils;
 
 public class ImportWizard extends Wizard implements IImportWizard {
 
-	private ImportSelectionPage page = null;
+	private AppTreeSelectionPage page = null;
 
 	public ImportWizard() {
 		super();
@@ -32,7 +32,7 @@ public class ImportWizard extends Wizard implements IImportWizard {
 			this.performCancel();
 			return;
 		}
-		page = new ImportSelectionPage();
+		page = new AppTreeSelectionPage();
 	}
 
 	@Override

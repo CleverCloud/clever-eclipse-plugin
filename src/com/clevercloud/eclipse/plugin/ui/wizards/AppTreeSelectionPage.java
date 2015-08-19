@@ -24,14 +24,14 @@ import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
 import com.clevercloud.eclipse.plugin.api.json.SelfJSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ImportSelectionPage extends WizardPage {
+public class AppTreeSelectionPage extends WizardPage {
 
 	private Composite container;
 	private TreeViewer treeViewer;
 
 	private final static String  DESCRIPTION = "Import an existing project from Clever Cloud";
 
-	public ImportSelectionPage() {
+	public AppTreeSelectionPage() {
 		super("Import Application");
 		setTitle("Import Application");
 		setDescription(DESCRIPTION);
