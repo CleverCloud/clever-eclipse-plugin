@@ -23,6 +23,11 @@ import com.clevercloud.eclipse.plugin.core.WebSocketCore;
 public class LogHandler extends AbstractHandler {
 
 	@Override
+	public boolean isEnabled() {
+		return CcApi.isAuthentified();
+	}
+
+	@Override
 	public Object execute(ExecutionEvent event) {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveWorkbenchWindow(event)
 				.getSelectionService().getSelection();
@@ -33,18 +38,24 @@ public class LogHandler extends AbstractHandler {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:s.S'Z'");
 		df.setTimeZone(tz);
 		String timestamp = df.format(new Date());
-
-		String oldlogs = CcApi.getInstance().logRequest(prefs.getId(), 300);
-
 		try {
+			ConsoleUtils.showConsole(prefs.getName());
 			URI uri = new URI("wss://logs-api.clever-cloud.com/logs-socket/" + prefs.getId() + "?since=" + timestamp);
 			WebSocketCore ws = new WebSocketCore(uri, prefs.getName());
 			ws.connectBlocking();
-			ConsoleUtils.showConsole(prefs.getName());
-			ConsoleUtils.printMessage(prefs.getName(), oldlogs);
+
+			printOldLogs(prefs);
 		} catch (KeyManagementException | NoSuchAlgorithmException | URISyntaxException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private void printOldLogs(PreferencesUtils prefs) {
+		String oldlogs = CcApi.getInstance().logRequest(prefs.getId(), 300);
+		String[] logs = oldlogs.split("\n");
+		for (Integer i = logs.length - 1; i >= 0; i--) {
+			ConsoleUtils.printMessage(prefs.getName(), logs[i]);
+		}
 	}
 }
