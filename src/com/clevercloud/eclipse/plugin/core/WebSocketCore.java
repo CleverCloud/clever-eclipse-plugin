@@ -16,8 +16,9 @@ import com.clevercloud.eclipse.plugin.api.CcApi;
 public class WebSocketCore extends WebSocketClient {
 
 	private String oauth;
+	private String name;
 
-	public WebSocketCore(URI uri) throws NoSuchAlgorithmException, KeyManagementException {
+	public WebSocketCore(URI uri, String name) throws NoSuchAlgorithmException, KeyManagementException {
 		super(uri, new Draft_10(), null, 0);
 
 		SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -25,27 +26,37 @@ public class WebSocketCore extends WebSocketClient {
 		this.setWebSocketFactory(new DefaultSSLWebSocketClientFactory(sslContext));
 
 		this.oauth = CcApi.getInstance().wsLogSigner();
+		this.name = name;
+	}
+
+	public void printSocket(String message) {
+		if (ConsoleUtils.consoleExist(this.name))
+			ConsoleUtils.printMessage(this.name, message);
+		else
+			this.close();
 	}
 
 	@Override
 	public void onClose(int code, String msg, boolean remote) {
-		System.out.println("Disconnected");
+		if (ConsoleUtils.consoleExist(name))
+			this.printSocket("Connection Closed");
+		else
+			System.out.println("Connetion Closed");
 	}
 
 	@Override
-	public void onError(Exception arg0) {
-		System.out.println("Error");
-		arg0.printStackTrace();
+	public void onError(Exception e) {
+		e.printStackTrace();
 	}
 
 	@Override
-	public void onMessage(String arg0) {
-		System.out.println(arg0);
+	public void onMessage(String message) {
+		this.printSocket(message);
 	}
 
 	@Override
 	public void onOpen(ServerHandshake arg0) {
-		System.out.println("Connected");
 		this.send(oauth);
+		this.printSocket("Connected");
 	}
 }
