@@ -1,5 +1,6 @@
 package com.clevercloud.eclipse.plugin.core;
 
+import java.io.IOException;
 import java.net.URI;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,8 @@ import org.java_websocket.drafts.Draft_10;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.api.json.LogsSocketJSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class WebSocketCore extends WebSocketClient {
 
@@ -51,7 +54,14 @@ public class WebSocketCore extends WebSocketClient {
 
 	@Override
 	public void onMessage(String message) {
-		this.printSocket(message);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			LogsSocketJSON logs = mapper.readValue(message, LogsSocketJSON.class);
+			this.printSocket(logs.getSource().getLog());
+		} catch (IOException e) {
+			this.printSocket("Error, bad json log");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
