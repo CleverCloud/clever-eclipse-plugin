@@ -13,6 +13,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
@@ -24,12 +25,14 @@ import com.clevercloud.eclipse.plugin.core.WebSocketCore;
 public class LogHandler extends AbstractHandler {
 
 	@Override
-	public boolean isEnabled() {
-		return CcApi.isAuthentified();
-	}
-
-	@Override
 	public Object execute(ExecutionEvent event) {
+		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
+		if (!CcApi.isAuthentified()) {
+			CcApi.getInstance().executeLogin(shell);
+			if (!CcApi.isAuthentified())
+				return null;
+		}
+
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveWorkbenchWindow(event)
 				.getSelectionService().getSelection();
 		IProject project = (IProject) selection.getFirstElement();
