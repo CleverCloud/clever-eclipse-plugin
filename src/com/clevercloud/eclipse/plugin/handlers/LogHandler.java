@@ -27,17 +27,19 @@ public class LogHandler extends AbstractHandler {
 				.getSelectionService().getSelection();
 		IProject project = (IProject) selection.getFirstElement();
 		PreferencesUtils prefs = new PreferencesUtils(project, false);
-		CcApi.getInstance().logRequest(prefs.getId(), 300);
 
 		TimeZone tz = TimeZone.getTimeZone("UTC");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:s.S'Z'");
 		df.setTimeZone(tz);
 		String timestamp = df.format(new Date());
 
+		String oldlogs = CcApi.getInstance().logRequest(prefs.getId(), 300);
+
 		try {
 			URI uri = new URI("wss://logs-api.clever-cloud.com/logs-socket/" + prefs.getId() + "?since=" + timestamp);
 			WebSocketCore ws = new WebSocketCore(uri);
 			ws.connectBlocking();
+			//TODO: Open a console & log
 		} catch (KeyManagementException | NoSuchAlgorithmException | URISyntaxException | InterruptedException e) {
 			e.printStackTrace();
 		}

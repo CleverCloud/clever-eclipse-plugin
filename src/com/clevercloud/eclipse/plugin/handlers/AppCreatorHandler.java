@@ -8,6 +8,7 @@ public class AppCreatorHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		//TODO: UI for creating an app
 		return null;
 	}
 

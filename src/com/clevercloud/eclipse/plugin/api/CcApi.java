@@ -36,7 +36,6 @@ public class CcApi {
 	public static CcApi getInstance() {
 		if (instance == null)
 			instance = new CcApi();
-
 		instance.initService();
 		return instance;
 	}

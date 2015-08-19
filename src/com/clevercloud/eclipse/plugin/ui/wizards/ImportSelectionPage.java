@@ -73,12 +73,14 @@ public class ImportSelectionPage extends WizardPage {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				setPageComplete(canFinish());
-				CleverServiceJSON service = (CleverServiceJSON)((IStructuredSelection)event.getSelection()).getFirstElement();
+				CleverServiceJSON service = (CleverServiceJSON)((IStructuredSelection)event
+						.getSelection()).getFirstElement();
 				if (service instanceof ApplicationJSON && !canFinish()) {
 					if (!((ApplicationJSON)service).getDeployment().getType().equals("GIT")) {
 						setErrorMessage("This plugin can only work with git applications.");
 					} else {
-						setErrorMessage("Can't clone " + service.getName() + ", it already exist in your workspace.");
+						setErrorMessage("Can't clone " + service.getName()
+						+ ", it already exist in your workspace.");
 					}
 				} else {
 					setErrorMessage(null);

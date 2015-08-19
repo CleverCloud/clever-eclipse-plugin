@@ -63,7 +63,8 @@ public class ImportWizard extends Wizard implements IImportWizard {
 			}
 		};
 
-		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench().getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench()
+				.getService(IWorkbenchSiteProgressService.class);
 		if (progress != null) {
 			progress.schedule(job);
 		} else {

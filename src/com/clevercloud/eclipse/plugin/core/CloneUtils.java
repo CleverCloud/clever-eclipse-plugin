@@ -47,7 +47,8 @@ public class CloneUtils {
 		this.store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
 	}
 
-	public IStatus execute() throws URISyntaxException, InvocationTargetException, InterruptedException, CoreException {
+	public IStatus execute() throws URISyntaxException, InvocationTargetException,
+									InterruptedException, CoreException {
 		monitor.beginTask(this.name, 5);
 		monitor.setTaskName("Creating repository");
 		URIish uri = new URIish(this.url);

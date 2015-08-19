@@ -8,7 +8,7 @@ public class AppLinkerHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		//TODO: Invoke wizard with ImportSelecionPage & lin
 		return null;
 	}
-
 }

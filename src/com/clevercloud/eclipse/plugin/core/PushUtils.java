@@ -41,13 +41,12 @@ public class PushUtils {
 	}
 
 	public void execute(Shell shell) {
-		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench().getService(IWorkbenchSiteProgressService.class);
+		IWorkbenchSiteProgressService progress = PlatformUI.getWorkbench()
+				.getService(IWorkbenchSiteProgressService.class);
 		if (this.mapping == null)
 			return;
 		final Repository repo = this.mapping.getRepository();
 
-		//TODO: Regex match repo
-		//TODO: Use .clever.json file for project informations
 		Job job = new Job(this.project.getName()) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -68,7 +67,6 @@ public class PushUtils {
 	}
 	private void push(Repository repo, IProgressMonitor monitor) throws URISyntaxException,
 	InvocationTargetException, IOException, CoreException {
-		//TODO:Use the true repo url
 		String url = prefs.getGitUrl();
 		URIish uri = new URIish(url);
 		StoredConfig config = repo.getConfig();
