@@ -22,11 +22,12 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		CcApi.getInstance();
+		CcApi.getInstance().loadTokens();
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		CcApi.getInstance().saveTokens();
 		plugin = null;
 		super.stop(context);
 	}
