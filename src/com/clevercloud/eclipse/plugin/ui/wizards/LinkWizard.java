@@ -29,7 +29,7 @@ public class LinkWizard extends Wizard {
 
 	@Override
 	public String getWindowTitle() {
-		return "Link project to an app";
+		return "CleverCloud Project Wizard";
 	}
 
 	@Override
