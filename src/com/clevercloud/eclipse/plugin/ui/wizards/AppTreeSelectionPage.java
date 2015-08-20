@@ -112,7 +112,8 @@ public class AppTreeSelectionPage extends WizardPage {
 		if (selection.getFirstElement() instanceof ApplicationJSON) {
 			ApplicationJSON app = (ApplicationJSON)selection.getFirstElement();
 			File cloneDir = new File(Platform.getLocation().toOSString(), app.getName());
-			if (!cloneDir.exists() && app.getDeployment().getType().equals("GIT")) {
+			if ((!cloneDir.exists() || getWizard() instanceof LinkWizard)
+					&& app.getDeployment().getType().equals("GIT")) {
 				return true;
 			}
 		}
