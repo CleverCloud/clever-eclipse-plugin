@@ -59,7 +59,7 @@ public class ImportWizard extends Wizard implements IImportWizard {
 					return op.execute();
 				} catch (InvocationTargetException | URISyntaxException | InterruptedException | CoreException e) {
 					e.printStackTrace();
-					NotificationUI.sendNotif("Failed to clone " + selected.getName());
+					NotificationUI.sendNotif("Failed to clone " + selected.getName() + ".");
 					return Status.CANCEL_STATUS;
 				}
 			}
