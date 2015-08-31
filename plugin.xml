@@ -195,4 +195,15 @@
             name="Log">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.mylyn.commons.notifications.ui.notifications">
+     <event
+	 categoryId="com.clevercloud.eclipse.plugin.notification.category"
+         id="com.clevercloud.eclipse.plugin.notification.event"
+         label="Build Service Changed"/>
+     <category
+         icon="icons/clever16.png"
+         id="com.clevercloud.eclipse.plugin.notification.category"
+         label="Clever Cloud"/>
+   </extension>
 </plugin>

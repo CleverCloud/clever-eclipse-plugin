@@ -25,6 +25,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
 
 import com.clevercloud.eclipse.plugin.CleverNature;
+import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 
 @SuppressWarnings("restriction")
 public class CloneUtils {
@@ -53,8 +54,10 @@ public class CloneUtils {
 		monitor.setTaskName("Creating repository");
 		URIish uri = new URIish(this.url);
 		File cloneDir = new File(Platform.getLocation().toOSString(), this.name);
-		if (cloneDir.exists())
+		if (cloneDir.exists()) {
+			NotificationUI.sendNotif("Can't clone " + name + ", folder already exists.");
 			return Status.CANCEL_STATUS;
+		}
 
 		CloneOperation op = new CloneOperation(uri, true, null, cloneDir, Constants.R_HEADS + Constants.MASTER,
 				"clever", store.getInt(UIPreferences.REMOTE_CONNECTION_TIMEOUT));
@@ -98,6 +101,7 @@ public class CloneUtils {
 		CleverNature.addProjectNature(project, monitor);
 		monitor.worked(1);
 		monitor.done();
+		NotificationUI.sendNotif(name + " cloned successfully.");
 		return Status.OK_STATUS;
 	}
 }

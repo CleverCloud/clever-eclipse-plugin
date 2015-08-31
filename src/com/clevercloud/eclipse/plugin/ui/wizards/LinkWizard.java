@@ -10,6 +10,7 @@ import com.clevercloud.eclipse.plugin.CleverNature;
 import com.clevercloud.eclipse.plugin.api.CcApi;
 import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.core.PreferencesUtils;
+import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 
 public class LinkWizard extends Wizard {
 
@@ -52,6 +53,7 @@ public class LinkWizard extends Wizard {
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
+		NotificationUI.sendNotif(selected.getName() +  " linked to " + project.getName() + " successfully.");
 		return true;
 	}
 
