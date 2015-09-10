@@ -35,3 +35,12 @@ For opening the plug-in in eclipse it's a bit harder.
 1. Import the project in eclipse
 2. Right click on the project and `Run As` -> `8 Maven Install`
 3. All the `Missing required library` errors will be solved
+
+### 3- Features
+ * Login with a clever account
+ * Import application from clever
+ * Link an existing app
+ * Push an application
+ * Redeploy application
+ * See the logs of an application
+ * Notification of deployment
