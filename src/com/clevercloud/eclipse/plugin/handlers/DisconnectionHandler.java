@@ -4,6 +4,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 
 public class DisconnectionHandler extends AbstractHandler {
 
@@ -18,6 +19,7 @@ public class DisconnectionHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) {
 		CcApi.disconnect();
+		NotificationUI.stop();
 		return null;
 	}
 }

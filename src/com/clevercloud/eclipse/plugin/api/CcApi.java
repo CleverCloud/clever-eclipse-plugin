@@ -22,6 +22,7 @@ import org.scribe.oauth.OAuthService;
 import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
 import com.clevercloud.eclipse.plugin.api.json.WebSocketJSON;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
+import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -29,8 +30,8 @@ public class CcApi {
 
 	private static CcApi instance = null;
 
-	private static final String API_KEY = "T8NZNyJejYkevYvKj1EWgSq0rnXABH";
-	private static final String API_SECRET = "QCLYg7n9YJwlxoEI0HkMSwetuphT9Q";
+	private static final String API_KEY = "Pk2HtMWPXsBCbjZgkYRlfOJCvK7YXO";
+	private static final String API_SECRET = "muu17xKYOSElHJB92OTnAAxYjgQhps";
 	private static final String API_CALLBACK = "https://console.clever-cloud.com/cli-oauth";
 
 	private static final String PREFS_TOKEN = "oauthToken";
@@ -74,6 +75,8 @@ public class CcApi {
 		this.accessToken = oauth.getAccessToken(requestToken, verifier);
 		save = MessageDialog.openQuestion(shell, "Save session",
 				"Would you like to save your user for the next session ?");
+
+		NotificationUI.start();
 	}
 
 	public void parseTokens(String strurl) {
@@ -197,6 +200,6 @@ public class CcApi {
 	}
 
 	public static String getOrgaUrl(String orga) {
-		return (orga.equals("self") ? "/" : "/organisations/") + orga;
+		return (orga.startsWith("orga_") ? "/organisations/" + orga : "/self");
 	}
 }

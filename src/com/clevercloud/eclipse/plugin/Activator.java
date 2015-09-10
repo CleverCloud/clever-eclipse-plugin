@@ -5,6 +5,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -23,10 +24,12 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		CcApi.getInstance().loadTokens();
+		NotificationUI.start();
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		NotificationUI.stop();
 		CcApi.getInstance().saveTokens();
 		plugin = null;
 		super.stop(context);
