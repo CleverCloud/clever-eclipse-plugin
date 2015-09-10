@@ -27,7 +27,7 @@ public class EventJSON {
 		if (data.getName() != null)
 			return data.getName();
 		ObjectMapper mapper = new ObjectMapper();
-		String appJSON = CcApi.getInstance().apiRequest(CcApi.getOrgaUrl(data.getOwnerId()) + "/applications/"
+		String appJSON = CcApi.getInstance().apiGet(CcApi.getOrgaUrl(data.getOwnerId()) + "/applications/"
 		+ data.getAppId());
 
 		ApplicationJSON app = mapper.readValue(appJSON, ApplicationJSON.class);
@@ -38,7 +38,7 @@ public class EventJSON {
 		ObjectMapper mapper = new ObjectMapper();
 		if (ownerId.startsWith("user_"))
 			return "";
-		String organisationJSON = CcApi.getInstance().apiRequest("/organisations/" + ownerId);
+		String organisationJSON = CcApi.getInstance().apiGet("/organisations/" + ownerId);
 		OrganisationJSON orga = mapper.readValue(organisationJSON, OrganisationJSON.class);
 		return " in " + orga.getName();
 	}
@@ -46,12 +46,12 @@ public class EventJSON {
 	private String getAuthorName(String ownerId) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		if (ownerId.startsWith("user_")) {
-			String selfJSON = CcApi.getInstance().apiRequest("/self");
+			String selfJSON = CcApi.getInstance().apiGet("/self");
 			SelfJSON self = mapper.readValue(selfJSON, SelfJSON.class);
 			return self.getName();
 
 		} else {
-			String membersJSON = CcApi.getInstance().apiRequest("/organisations/" + ownerId +"/members");
+			String membersJSON = CcApi.getInstance().apiGet("/organisations/" + ownerId +"/members");
 			OrganisationMemberJSON[] members = mapper.readValue(membersJSON, OrganisationMemberJSON[].class);
 			for (OrganisationMemberJSON member : members) {
 				if (member.getInfos().getId().equals(this.authorId))

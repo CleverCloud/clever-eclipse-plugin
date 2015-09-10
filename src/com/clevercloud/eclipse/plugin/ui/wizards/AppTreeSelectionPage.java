@@ -47,11 +47,11 @@ public class AppTreeSelectionPage extends WizardPage {
 		try {
 			OrganisationJSON self = new OrganisationJSON();
 			self.setId("self");
-			SelfJSON selfInfo = objectMapper.readValue(CcApi.getInstance().apiRequest("/self"), SelfJSON.class);
+			SelfJSON selfInfo = objectMapper.readValue(CcApi.getInstance().apiGet("/self"), SelfJSON.class);
 			self.setName(selfInfo.getName());
 
 			OrganisationJSON[] orgas = objectMapper.readValue(CcApi.getInstance()
-					.apiRequest("/organisations?user=" + CcApi.getInstance().getUser()), OrganisationJSON[].class);
+					.apiGet("/organisations?user=" + CcApi.getInstance().getUser()), OrganisationJSON[].class);
 			orgas = ArrayUtils.add(orgas, self);
 			this.createTree(orgas);
 

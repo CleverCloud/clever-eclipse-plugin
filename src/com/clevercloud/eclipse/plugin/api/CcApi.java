@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -167,8 +168,18 @@ public class CcApi {
 		return this.user;
 	}
 
-	public String apiRequest(String url) {
+	public String apiGet(String url) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, CleverCloudApi.BASE_URL + url);
+		this.oauth.signRequest(this.accessToken, request);
+		Response response = request.send();
+		return response.getBody();
+	}
+
+	public String apiPost(String url, Map<String, String> params) {
+		OAuthRequest request = new OAuthRequest(Verb.POST, CleverCloudApi.BASE_URL + url);
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			request.addBodyParameter(entry.getKey(), entry.getValue());
+		}
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();

@@ -15,7 +15,7 @@ public class OrganisationJSON extends CleverServiceJSON {
 		if (!CcApi.isAuthentified())
 			return null;
 		ObjectMapper mapper = new ObjectMapper();
-		String json = CcApi.getInstance().apiRequest(CcApi.getOrgaUrl(this.getId()) + "/applications");
+		String json = CcApi.getInstance().apiGet(CcApi.getOrgaUrl(this.getId()) + "/applications");
 		ApplicationJSON[] childs = null;
 		try {
 			childs = mapper.readValue(json, ApplicationJSON[].class);

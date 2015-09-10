@@ -87,7 +87,7 @@ public class PreferencesUtils {
 		String name = this.getName();
 		String url = this.getGitUrl();
 		ObjectMapper mapper = new ObjectMapper();
-		String request = CcApi.getInstance().apiRequest(CcApi.getOrgaUrl(orga) + "/applications/" + id);
+		String request = CcApi.getInstance().apiGet(CcApi.getOrgaUrl(orga) + "/applications/" + id);
 		try {
 			ApplicationJSON app = mapper.readValue(request, ApplicationJSON.class);
 			if (!name.equals(app.getName()))
