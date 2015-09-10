@@ -74,7 +74,7 @@ public class PushUtils {
 		remoteConfig.addURI(uri);
 		remoteConfig.update(config);
 		config.save();
-		//TODO: Use force push (true/false) ??
+
 		PushOperation op = new PushOperation(repo, REMOTE_NAME, false, 0);
 		op.run(monitor);
 		remoteConfig.removeURI(uri);
