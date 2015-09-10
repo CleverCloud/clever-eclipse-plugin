@@ -18,10 +18,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.api.json.CleverServiceJSON;
-import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
 import com.clevercloud.eclipse.plugin.api.json.SelfJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.organisation.OrganisationJSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AppTreeSelectionPage extends WizardPage {

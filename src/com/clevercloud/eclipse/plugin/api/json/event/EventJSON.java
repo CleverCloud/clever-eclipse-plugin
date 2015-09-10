@@ -1,8 +1,12 @@
-package com.clevercloud.eclipse.plugin.api.json;
+package com.clevercloud.eclipse.plugin.api.json.event;
 
 import java.io.IOException;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
+import com.clevercloud.eclipse.plugin.api.json.SelfJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.organisation.OrganisationJSON;
+import com.clevercloud.eclipse.plugin.api.json.organisation.OrganisationMemberJSON;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;

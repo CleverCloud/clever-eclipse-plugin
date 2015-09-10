@@ -13,7 +13,7 @@ import org.java_websocket.drafts.Draft_10;
 import org.java_websocket.handshake.ServerHandshake;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.LogsSocketJSON;
+import com.clevercloud.eclipse.plugin.api.json.logs.LogsSocketJSON;
 import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

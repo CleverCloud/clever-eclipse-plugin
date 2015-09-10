@@ -13,7 +13,7 @@ import org.eclipse.mylyn.commons.notifications.core.AbstractNotification;
 import org.eclipse.mylyn.internal.commons.notifications.ui.NotificationsPlugin;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.EventJSON;
+import com.clevercloud.eclipse.plugin.api.json.event.EventJSON;
 import com.clevercloud.eclipse.plugin.core.WebSocketCore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

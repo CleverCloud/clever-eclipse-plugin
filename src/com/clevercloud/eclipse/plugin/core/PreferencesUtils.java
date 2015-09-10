@@ -9,7 +9,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.clevercloud.eclipse.plugin.Activator;
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class PreferencesUtils {

@@ -19,8 +19,8 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
-import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
 import com.clevercloud.eclipse.plugin.api.json.WebSocketJSON;
+import com.clevercloud.eclipse.plugin.api.json.organisation.OrganisationJSON;
 import com.clevercloud.eclipse.plugin.ui.LoginUI;
 import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 import com.fasterxml.jackson.databind.ObjectMapper;

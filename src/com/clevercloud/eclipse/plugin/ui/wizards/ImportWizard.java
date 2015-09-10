@@ -18,7 +18,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.core.CloneUtils;
 import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 

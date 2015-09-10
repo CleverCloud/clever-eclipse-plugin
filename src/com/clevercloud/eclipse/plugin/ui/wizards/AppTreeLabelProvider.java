@@ -5,8 +5,8 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
 import com.clevercloud.eclipse.plugin.Activator;
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.api.json.CleverServiceJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
 
 public class AppTreeLabelProvider implements ILabelProvider {
 

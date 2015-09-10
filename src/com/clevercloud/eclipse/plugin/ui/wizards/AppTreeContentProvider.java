@@ -3,9 +3,9 @@ package com.clevercloud.eclipse.plugin.ui.wizards;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.api.json.CleverServiceJSON;
-import com.clevercloud.eclipse.plugin.api.json.OrganisationJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.organisation.OrganisationJSON;
 
 public class AppTreeContentProvider implements ITreeContentProvider {
 

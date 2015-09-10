@@ -1,4 +1,4 @@
-package com.clevercloud.eclipse.plugin.api.json;
+package com.clevercloud.eclipse.plugin.api.json.organisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

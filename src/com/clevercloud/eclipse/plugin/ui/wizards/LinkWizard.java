@@ -8,7 +8,7 @@ import org.eclipse.jface.wizard.Wizard;
 
 import com.clevercloud.eclipse.plugin.CleverNature;
 import com.clevercloud.eclipse.plugin.api.CcApi;
-import com.clevercloud.eclipse.plugin.api.json.ApplicationJSON;
+import com.clevercloud.eclipse.plugin.api.json.application.ApplicationJSON;
 import com.clevercloud.eclipse.plugin.core.PreferencesUtils;
 import com.clevercloud.eclipse.plugin.ui.NotificationUI;
 
