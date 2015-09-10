@@ -15,4 +15,8 @@ public class LogsSocketSourceJSON {
 	public String getLog() {
 		return timestamp + ": " + message;
 	}
+
+	public String getMessage() {
+		return message;
+	}
 }

@@ -177,9 +177,12 @@ public class CcApi {
 
 	public String apiPost(String url, Map<String, String> params) {
 		OAuthRequest request = new OAuthRequest(Verb.POST, CleverCloudApi.BASE_URL + url);
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			request.addBodyParameter(entry.getKey(), entry.getValue());
-		}
+
+		if (params != null)
+			for (Map.Entry<String, String> entry : params.entrySet())
+				request.addBodyParameter(entry.getKey(), entry.getValue());
+		request.addHeader("Content-Type", "application/json");
+
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
 		return response.getBody();

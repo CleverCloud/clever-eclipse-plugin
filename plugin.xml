@@ -100,6 +100,12 @@
                   label="Application logs"
                   style="push">
             </command>
+            <command
+                  commandId="com.clevercloud.eclipse.plugin.command.redeployCommand"
+                  icon="icons/application_go.png"
+                  label="Redeploy application"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -167,6 +173,10 @@
             class="com.clevercloud.eclipse.plugin.handlers.LogHandler"
             commandId="com.clevercloud.eclipse.plugin.command.logCommand">
       </handler>
+      <handler
+            class="com.clevercloud.eclipse.plugin.handlers.AppRedeployHandler"
+            commandId="com.clevercloud.eclipse.plugin.command.redeployCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -193,6 +203,10 @@
       <command
             id="com.clevercloud.eclipse.plugin.command.logCommand"
             name="Log">
+      </command>
+      <command
+            id="com.clevercloud.eclipse.plugin.command.redeployCommand"
+            name="Redeploy">
       </command>
    </extension>
    <extension
