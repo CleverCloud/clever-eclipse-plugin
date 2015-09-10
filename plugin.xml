@@ -62,12 +62,6 @@
                </with>
             </visibleWhen>
             <command
-                  commandId="com.clevercloud.eclipse.plugin.command.appCreatorCommand"
-                  icon="icons/application_add.png"
-                  label="Create an app"
-                  style="push">
-            </command>
-            <command
                   commandId="com.clevercloud.eclipse.plugin.command.appLinkerCommand"
                   icon="icons/application_link.png"
                   label="Link to an existing app"
@@ -166,10 +160,6 @@
             commandId="com.clevercloud.eclipse.plugin.command.appLinkerCommand">
       </handler>
       <handler
-            class="com.clevercloud.eclipse.plugin.handlers.AppCreatorHandler"
-            commandId="com.clevercloud.eclipse.plugin.command.appCreatorCommand">
-      </handler>
-      <handler
             class="com.clevercloud.eclipse.plugin.handlers.LogHandler"
             commandId="com.clevercloud.eclipse.plugin.command.logCommand">
       </handler>
@@ -195,10 +185,6 @@
       <command
             id="com.clevercloud.eclipse.plugin.command.appLinkerCommand"
             name="AppLinker">
-      </command>
-      <command
-            id="com.clevercloud.eclipse.plugin.command.appCreatorCommand"
-            name="AppCreator">
       </command>
       <command
             id="com.clevercloud.eclipse.plugin.command.logCommand"
