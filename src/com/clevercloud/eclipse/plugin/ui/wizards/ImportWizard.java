@@ -54,7 +54,7 @@ public class ImportWizard extends Wizard implements IImportWizard {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				CloneUtils op = new CloneUtils(selected.getName(), selected.getDeployment().getUrl(),
-						selected.getId(), selected.getParent().getId(), monitor);
+						selected.getId(), selected.getParent().getId(), selected.getInstance().getType(), monitor);
 				try {
 					return op.execute();
 				} catch (InvocationTargetException | URISyntaxException | InterruptedException | CoreException e) {

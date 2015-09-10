@@ -10,6 +10,22 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class CleverNature implements IProjectNature {
 
 	public static final String NATURE_ID = "clever-eclipse.clevernature";
+
+	public static final String PHP_NATURE = "org.eclipse.php.core.PHPNature";
+	public static final String FACET_NATURE = "org.eclipse.wst.common.project.facet.core.nature";
+
+	public static final String RUBY_NATURE = "org.eclipse.dltk.ruby.core.nature";
+
+	public static final String JAVA_NATURE = "org.eclipse.jdt.core.javanature";
+
+	public static final String PYTHON_NATURE = "org.python.pydev.pythonNature";
+
+	public static final String SBT_NATURE = "org.scala-ide.sdt.core.scalanature";
+
+	public static final String NODE_NATURE = "org.nodeclipse.ui.NodeNature";
+	public static final String JS_NATURE = "org.eclipse.wst.jsdt.core.jsNature";
+	public static final String TERN_NATURE = "tern.eclipse.ide.core.ternnature";
+
 	private IProject project;
 
 	@Override

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ApplicationJSON extends CleverServiceJSON {
 
 	private ApplicationDeploymentJSON deployment;
+	private ApplicationInstanceJSON instance;
 
 	private OrganisationJSON parent;
 
@@ -26,5 +27,9 @@ public class ApplicationJSON extends CleverServiceJSON {
 
 	public ApplicationDeploymentJSON getDeployment() {
 		return this.deployment;
+	}
+
+	public ApplicationInstanceJSON getInstance() {
+		return instance;
 	}
 }

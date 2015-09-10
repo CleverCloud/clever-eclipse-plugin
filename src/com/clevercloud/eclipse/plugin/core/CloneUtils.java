@@ -19,7 +19,6 @@ import org.eclipse.egit.core.Activator;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.egit.core.op.CloneOperation;
 import org.eclipse.egit.ui.UIPreferences;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.transport.URIish;
@@ -34,15 +33,17 @@ public class CloneUtils {
 	private String id;
 	private String url;
 	private String orga;
+	private String type;
 	private IProgressMonitor monitor;
 	private RepositoryUtil repositoryUtil;
 	private IPreferenceStore store;
 
-	public CloneUtils(String name, String url, String id, String orga, IProgressMonitor monitor) {
+	public CloneUtils(String name, String url, String id, String orga, String type, IProgressMonitor monitor) {
 		this.name = name;
 		this.id = id;
 		this.url = url;
 		this.orga = orga;
+		this.type = type;
 		this.monitor = monitor;
 		this.repositoryUtil = Activator.getDefault().getRepositoryUtil();
 		this.store = org.eclipse.egit.ui.Activator.getDefault().getPreferenceStore();
@@ -82,8 +83,19 @@ public class CloneUtils {
 			project.create(monitor);
 			project.open(monitor);
 			desc = project.getDescription();
-			//TODO: Set langage plugin
-			desc.setNatureIds(new String[] {JavaCore.NATURE_ID});
+
+			if (type.contains("php"))
+				desc.setNatureIds(new String[] {CleverNature.PHP_NATURE, CleverNature.FACET_NATURE});
+			if (type.contains("maven"))
+				desc.setNatureIds(new String[] {CleverNature.JAVA_NATURE});
+			if (type.contains("ruby"))
+				desc.setNatureIds(new String[] {CleverNature.RUBY_NATURE});
+			if (type.contains("sbt"))
+				desc.setNatureIds(new String[] {CleverNature.SBT_NATURE, CleverNature.JAVA_NATURE});
+			if (type.contains("node"))
+				desc.setNatureIds(new String[] {CleverNature.NODE_NATURE, CleverNature.JS_NATURE,
+						CleverNature.TERN_NATURE});
+
 			project.setDescription(desc, monitor);
 		}
 		monitor.worked(1);
