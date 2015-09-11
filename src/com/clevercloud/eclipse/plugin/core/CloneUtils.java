@@ -86,10 +86,12 @@ public class CloneUtils {
 
 			if (type.contains("php"))
 				desc.setNatureIds(new String[] {CleverNature.PHP_NATURE, CleverNature.FACET_NATURE});
-			if (type.contains("maven"))
+			if (type.contains("java"))
 				desc.setNatureIds(new String[] {CleverNature.JAVA_NATURE});
 			if (type.contains("ruby"))
 				desc.setNatureIds(new String[] {CleverNature.RUBY_NATURE});
+			if (type.contains("go"))
+				desc.setNatureIds(new String[] {CleverNature.GO_NATURE});
 			if (type.contains("sbt"))
 				desc.setNatureIds(new String[] {CleverNature.SBT_NATURE, CleverNature.JAVA_NATURE});
 			if (type.contains("node"))

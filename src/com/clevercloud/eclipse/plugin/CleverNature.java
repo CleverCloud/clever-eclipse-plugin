@@ -16,6 +16,8 @@ public class CleverNature implements IProjectNature {
 
 	public static final String RUBY_NATURE = "org.eclipse.dltk.ruby.core.nature";
 
+	public static final String GO_NATURE = "com.googlecode.goclipse.core.goNature";
+
 	public static final String JAVA_NATURE = "org.eclipse.jdt.core.javanature";
 
 	public static final String PYTHON_NATURE = "org.python.pydev.pythonNature";
