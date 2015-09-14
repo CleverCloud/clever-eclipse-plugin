@@ -95,10 +95,13 @@ public class CloneUtils {
 			if (type.contains("sbt"))
 				desc.setNatureIds(new String[] {CleverNature.SBT_NATURE, CleverNature.JAVA_NATURE});
 			if (type.contains("node"))
-				desc.setNatureIds(new String[] {CleverNature.NODE_NATURE, CleverNature.JS_NATURE,
-						CleverNature.TERN_NATURE});
-
-			project.setDescription(desc, monitor);
+				desc.setNatureIds(new String[] {CleverNature.NODE_NATURE, CleverNature.JS_NATURE});
+			try {
+				project.setDescription(desc, monitor);
+			} catch (CoreException e) {
+				NotificationUI.sendNotif("The plugin for this language isn't installed.");
+				e.printStackTrace();
+			}
 		}
 		monitor.worked(1);
 

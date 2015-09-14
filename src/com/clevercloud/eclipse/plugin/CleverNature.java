@@ -26,7 +26,6 @@ public class CleverNature implements IProjectNature {
 
 	public static final String NODE_NATURE = "org.nodeclipse.ui.NodeNature";
 	public static final String JS_NATURE = "org.eclipse.wst.jsdt.core.jsNature";
-	public static final String TERN_NATURE = "tern.eclipse.ide.core.ternnature";
 
 	private IProject project;
 
