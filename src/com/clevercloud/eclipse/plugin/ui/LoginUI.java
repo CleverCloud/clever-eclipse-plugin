@@ -1,15 +1,15 @@
 package com.clevercloud.eclipse.plugin.ui;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 public class LoginUI {
 
@@ -45,8 +45,9 @@ public class LoginUI {
 					callbackUrl = browser.getUrl();
 				} else {
 					try {
-						Desktop.getDesktop().browse(new URI(browser.getUrl()));
-					} catch (IOException | URISyntaxException e) {
+						PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser()
+						.openURL(new URL(browser.getUrl()));
+					} catch (PartInitException | MalformedURLException e) {
 						e.printStackTrace();
 					}
 				}
