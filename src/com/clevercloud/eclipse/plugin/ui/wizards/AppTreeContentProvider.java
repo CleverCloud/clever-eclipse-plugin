@@ -45,9 +45,9 @@ public class AppTreeContentProvider implements ITreeContentProvider {
 	@Override
 	public boolean hasChildren(Object element) {
 		CleverServiceJSON service = (CleverServiceJSON)element;
-		if (service instanceof OrganisationJSON) {
+		if (service != null && service instanceof OrganisationJSON) {
 			OrganisationJSON orga = (OrganisationJSON)service;
-			if (orga.getChilds().length > 0)
+			if (orga.getChilds() != null && orga.getChilds().length > 0)
 				return true;
 		}
 		return false;

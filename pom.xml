@@ -12,6 +12,7 @@
     <scribe-version>1.3.7</scribe-version>
     <jackson-version>2.6.1</jackson-version>
     <commons-lang3-version>3.4</commons-lang3-version>
+    <commons-io-version>1.3.2</commons-io-version>
     <java-websocket-version>1.3.0</java-websocket-version>
   </properties>
 
@@ -73,6 +74,11 @@
 		  <groupId>org.apache.commons</groupId>
 		  <artifactId>commons-lang3</artifactId>
 		  <version>${commons-lang3-version}</version>
+		</artifactItem>
+	        <artifactItem>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>${commons-io-version}</version>
 		</artifactItem>
 		<artifactItem>
 		  <groupId>org.java-websocket</groupId>

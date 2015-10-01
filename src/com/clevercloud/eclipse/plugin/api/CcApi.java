@@ -1,11 +1,13 @@
 package com.clevercloud.eclipse.plugin.api;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.browser.Browser;
@@ -168,15 +170,28 @@ public class CcApi {
 		return this.user;
 	}
 
+	private String getResponse(InputStream stream) {
+		try {
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(stream, writer);
+			return writer.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
 	public String apiGet(String url) {
 		OAuthRequest request = new OAuthRequest(Verb.GET, CleverCloudApi.BASE_URL + url);
+		request.setConnectionKeepAlive(true);
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
-		return response.getBody();
+		return getResponse(response.getStream());
 	}
 
 	public String apiPost(String url, Map<String, String> params) {
 		OAuthRequest request = new OAuthRequest(Verb.POST, CleverCloudApi.BASE_URL + url);
+		request.setConnectionKeepAlive(true);
 
 		if (params != null)
 			for (Map.Entry<String, String> entry : params.entrySet())
@@ -185,7 +200,7 @@ public class CcApi {
 
 		this.oauth.signRequest(this.accessToken, request);
 		Response response = request.send();
-		return response.getBody();
+		return getResponse(response.getStream());
 	}
 
 	public String logRequest(String appid, Integer limit) {

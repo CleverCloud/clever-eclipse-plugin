@@ -23,4 +23,5 @@ Bundle-ClassPath: .,
  lib/jackson-core.jar,
  lib/jackson-databind.jar,
  lib/jackson-annotations.jar,
- lib/Java-WebSocket.jar
+ lib/Java-WebSocket.jar,
+ lib/commons-io.jar
