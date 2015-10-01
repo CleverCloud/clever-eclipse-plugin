@@ -100,6 +100,12 @@
                   label="Redeploy application"
                   style="push">
             </command>
+            <command
+                  commandId="com.clevercloud.eclipse.plugin.command.pushCommand"
+                  icon="icons/application_get.png"
+                  label="Push application"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -167,6 +173,10 @@
             class="com.clevercloud.eclipse.plugin.handlers.AppRedeployHandler"
             commandId="com.clevercloud.eclipse.plugin.command.redeployCommand">
       </handler>
+      <handler
+            class="com.clevercloud.eclipse.plugin.handlers.PushHandler"
+            commandId="com.clevercloud.eclipse.plugin.command.pushCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -193,6 +203,10 @@
       <command
             id="com.clevercloud.eclipse.plugin.command.redeployCommand"
             name="Redeploy">
+      </command>
+      <command
+            id="com.clevercloud.eclipse.plugin.command.pushCommand"
+            name="Push">
       </command>
    </extension>
    <extension
