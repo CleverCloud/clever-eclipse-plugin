@@ -1,6 +1,7 @@
 # Clever-Eclipse
 
-Clever-Eclipse is an eclipse plug-in for managing and pushing your project to clever-cloud.com.
+Clever-Eclipse is an eclipse plug-in for managing and pushing your project to
+clever-cloud.com.
 
 ### 1-Building with Maven
 
@@ -44,3 +45,9 @@ For opening the plug-in in eclipse it's a bit harder.
  * Redeploy application
  * See the logs of an application
  * Notification of deployment
+
+### 4- Possible errors
+
+The plugin can lose some functionality when eclipse get up-to-date, for fixing
+graphical errors such as contextual menu that disappears you should maybe
+rebuild all the extension menu.
